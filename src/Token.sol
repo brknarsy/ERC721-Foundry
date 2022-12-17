@@ -24,6 +24,10 @@ contract Token is ERC721, Ownable {
         _safeMint(to, tokenId);
     }
 
+    function burnToken(uint256 tokenId) public onlyOwner {
+        _burn(tokenId);
+    }
+
     function _burn(uint256 tokenId) internal override(ERC721) {
         super._burn(tokenId);
     }

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 import "../lib/forge-std/src/Test.sol";
@@ -26,5 +27,13 @@ contract TokenTest is Test {
         vm.expectRevert("Ownable: caller is not the owner");
         token.safeMint(minter);
         vm.stopPrank();
+    }
+
+    function testBurningToken() public {
+        token.safeMint(msg.sender);
+        assertEq(token.ownerOf(0), msg.sender); // Does not revert
+        token.burnToken(0);
+        //vm.expectRevert("ERC721: invalid token ID");
+        //assertEq(token.ownerOf(0), msg.sender); // Reverts
     }
 }
