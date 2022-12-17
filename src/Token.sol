@@ -2,11 +2,12 @@
 pragma solidity ^0.8.4;
 
 import "../lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
-import "../lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 import "../lib/openzeppelin-contracts/contracts/utils/Counters.sol";
 
-contract Token is ERC721, ERC721URIStorage, Ownable {
+import "../lib/openzeppelin-contracts/contracts/utils/Strings.sol";
+
+contract Token is ERC721, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -14,26 +15,25 @@ contract Token is ERC721, ERC721URIStorage, Ownable {
     constructor() ERC721("Token", "T") {}
 
     function _baseURI() internal pure override returns (string memory) {
-        return "https://https://brknarsy.github.io/erc721-foundry";
+        return "https://brknarsy.github.io/erc721-foundry/jsons/";
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
     }
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+    function _burn(uint256 tokenId) internal override(ERC721) {
         super._burn(tokenId);
     }
 
     function tokenURI(uint256 tokenId)
         public
-        view
-        override(ERC721, ERC721URIStorage)
+        pure
+        override(ERC721)
         returns (string memory)
     {
-        return super.tokenURI(tokenId);
+        return string(abi.encodePacked(_baseURI(), Strings.toString(tokenId + 1), ".json"));
     }
 }
