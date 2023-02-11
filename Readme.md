@@ -1,6 +1,6 @@
 <h1>ERC721 with Foundry</h1>
-In this project I created a sample ERC721 contract and then made some tests with foundry
-Finally, I deployed it on goerli network using forge
+In this project I created a sample ERC721 contract and then made some tests with foundry <br>
+Later, I deployed it on goerli network using forge
 
 Here's the address of the latest contract -> 0x6A0a2B2562aa7dD3abd55cdD961D13e07E13e513
 
